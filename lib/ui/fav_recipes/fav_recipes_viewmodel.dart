@@ -19,7 +19,7 @@ class FavRecipesViewModel extends GetxController {
       _isLoading.value = true;
       _errorMessage.value = '';
 
-      _favRecipes.value = await _repository.getFavRecipes('f3346e9d-978a-41bc-b779-fc3dc3afe9fd');
+      _favRecipes.value = await _repository.fetchFavRecipes('f3346e9d-978a-41bc-b779-fc3dc3afe9fd');
     } catch (e) {
       _errorMessage.value = 'Falha ao buscar receitas: ${e.toString()}';
     } finally {

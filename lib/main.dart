@@ -7,12 +7,12 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
+  // Inicializações de Binding, .env e Supabase
   WidgetsFlutterBinding.ensureInitialized();
-
   await Env.init();
-
   await Supabase.initialize(url: Env.supabaseUrl, anonKey: Env.supabaseAnonKey);
 
+  // Injeções de dependências
   await setupDependencies();
 
   runApp(const MainApp());

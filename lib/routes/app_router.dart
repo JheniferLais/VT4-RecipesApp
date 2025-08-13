@@ -17,7 +17,8 @@ class AppRouter {
           routes: [
             GoRoute(
                 path: '/',
-                builder: (context, state) => RecipesView()),
+                builder: (context, state) => RecipesView()
+            ),
             GoRoute(
               path: '/recipe/:id',
               builder: (context, state) => RecipeDetailView(id: state.pathParameters['id']!),

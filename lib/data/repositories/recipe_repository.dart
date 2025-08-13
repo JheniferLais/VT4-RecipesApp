@@ -14,12 +14,12 @@ class RecipeRepository {
     }
   }
 
-  Future<Recipe?> getRecipeById(String id) async {
+  Future<Recipe?> fetchRecipeById(String id) async {
     final rawData = await _service.fetchRecipeById(id);
     return rawData != null ? Recipe.fromJson(rawData) : null;
   }
 
-  Future<List<Recipe>> getFavRecipes(String userId) async {
+  Future<List<Recipe>> fetchFavRecipes(String userId) async {
     final rawData = await _service.fetchFavRecipes(userId);
     return rawData
         .where((data) => data['recipes'] != null)

@@ -22,7 +22,7 @@ class RecipeDetailViewModel extends GetxController {
     try {
       _isLoading.value = true;
       _errorMessage.value = '';
-      _recipe.value = await _repository.getRecipeById(id);
+      _recipe.value = await _repository.fetchRecipeById(id);
 
       final userId = recipe!.userId;
 
@@ -38,7 +38,8 @@ class RecipeDetailViewModel extends GetxController {
     try {
       _isLoading.value = true;
       _errorMessage.value = '';
-      final favRecipes = await _repository.getFavRecipes(userId);
+
+      final favRecipes = await _repository.fetchFavRecipes(userId);
       return favRecipes.any((recipe) => recipe.id == recipeId);
     } catch (e) {
       _errorMessage.value = 'Falha ao buscar receita favorita: ${e.toString()}';
@@ -73,7 +74,9 @@ class RecipeDetailViewModel extends GetxController {
     try {
       _isLoading.value = true;
       _errorMessage.value = '';
+
       await _repository.removeFavRecipe(recipe.id, recipe.userId);
+
       _isFavorite.value = false;
     } catch (e) {
       _errorMessage.value = 'Falha ao desfavoritar receita: ${e.toString()}';
@@ -86,7 +89,9 @@ class RecipeDetailViewModel extends GetxController {
     try {
       _isLoading.value = true;
       _errorMessage.value = '';
+
       await _repository.addFavRecipe(recipe.id, recipe.userId);
+
       _isFavorite.value = true;
     } catch (e) {
       _errorMessage.value = 'Falha ao favoritar receita: ${e.toString()}';

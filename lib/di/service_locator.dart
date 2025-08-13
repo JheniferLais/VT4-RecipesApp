@@ -10,15 +10,17 @@ import '../ui/fav_recipes/fav_recipes_viewmodel.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
+  // Supabase
   getIt.registerSingleton<SupabaseClient>(Supabase.instance.client);
 
+  // Service
   getIt.registerLazySingleton<RecipeService>(() => RecipeService());
 
+  // Repository
   getIt.registerLazySingleton<RecipeRepository>(() => RecipeRepository());
 
+  // ViewModels
   getIt.registerLazySingleton<RecipesViewModel>(() => RecipesViewModel());
-
   getIt.registerLazySingleton<RecipeDetailViewModel>(() => RecipeDetailViewModel());
-
   getIt.registerLazySingleton<FavRecipesViewModel>(() => FavRecipesViewModel());
 }

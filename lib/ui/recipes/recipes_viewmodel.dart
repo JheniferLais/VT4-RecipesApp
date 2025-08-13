@@ -19,6 +19,7 @@ class RecipesViewModel extends GetxController{
     try {
       _isLoading.value = true;
       _errorMessage.value = '';
+
       _recipes.value = await _repository.fetchRecipes();
     } catch (e) {
       _errorMessage.value = 'Falha ao buscar receitas: ${e.toString()}';
