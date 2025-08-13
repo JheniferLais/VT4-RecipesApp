@@ -48,5 +48,4 @@ class RecipeService {
   Future<void> removeFavRecipe(String recipeId, String userId) async {
     await _supabaseClient.from('favorites').delete().eq('recipe_id', recipeId).eq('user_id', userId);
   }
-
 }
