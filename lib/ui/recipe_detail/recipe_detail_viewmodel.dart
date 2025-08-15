@@ -1,10 +1,14 @@
 import 'package:app4_receitas/data/models/recipe.dart';
 import 'package:app4_receitas/data/repositories/recipe_repository.dart';
 import 'package:app4_receitas/di/service_locator.dart';
+import 'package:either_dart/either.dart';
 import 'package:get/get.dart';
+
+import '../../data/repositories/auth_repository.dart';
 
 class RecipeDetailViewModel extends GetxController {
   final _repository = getIt<RecipeRepository>();
+  final _authRepository = getIt<AuthRepository>();
 
   // Estados
   final Rxn<Recipe> _recipe = Rxn<Recipe>();
@@ -24,7 +28,11 @@ class RecipeDetailViewModel extends GetxController {
       _errorMessage.value = '';
       _recipe.value = await _repository.fetchRecipeById(id);
 
-      final userId = recipe!.userId;
+      var userId = '';
+      await _authRepository.currentUser.fold(
+            (left) => _errorMessage.value = left.message,
+            (right) => userId = right.id,
+      );
 
       _isFavorite.value = await isRecipeFavorite(id, userId);
     } catch (e) {
@@ -53,13 +61,17 @@ class RecipeDetailViewModel extends GetxController {
     try {
       _isLoading.value = true;
       _errorMessage.value = '';
-
-      final recipe = _recipe.value!;
+      var userId = '';
+      await _authRepository.currentUser.fold(
+            (left) => _errorMessage.value = left.message,
+            (right) => userId = right.id,
+      );
+      final recipeId = recipe!.id;
 
       if (_isFavorite.value) {
-        await _repository.removeFavRecipe(recipe.id, recipe.userId);
+        await _repository.removeFavRecipe(recipeId, userId);
       } else {
-        await _repository.addFavRecipe(recipe.id, recipe.userId);
+        await _repository.addFavRecipe(recipeId, userId);
       }
 
       _isFavorite.value = true;
