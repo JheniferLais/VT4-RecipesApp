@@ -1,3 +1,3 @@
 # app4_receitas
 
-A new Flutter project.
+App de receitas desenvolvido na capacitação flutter da Venturus
